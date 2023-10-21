@@ -1,23 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import CounterPage from './src/CounterPage';
+import React from "react";
+import CounterPage from "./src/pages/CounterPage";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import LoginPage from "./src/pages/LoginPage";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import SettingsPage from "./src/pages/SettingsPage";
+import BasicDashboardPage from "./src/pages/BasicDashboardPage";
+
+const stack = createStackNavigator();
+
+const bottomTab = createBottomTabNavigator();
+
+const BasicDashboardScreen = () => {
+  return (
+    <stack.Navigator>
+      <stack.Screen name="Counter" component={CounterPage} />
+      <stack.Screen name="Login" component={LoginPage} />
+    </stack.Navigator>
+  )
+
+}
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <CounterPage/>
-    </View>
-  );
+    <NavigationContainer>
+      <bottomTab.Navigator>
+        <bottomTab.Screen name="Dashboard" component={BasicDashboardScreen} />
+        <bottomTab.Screen name="Settings" component={SettingsPage} />
+      </bottomTab.Navigator>
+    </NavigationContainer>
+  )
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-export default App
+export default App;
